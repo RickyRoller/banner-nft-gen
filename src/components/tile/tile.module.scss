@@ -1,0 +1,15 @@
+.Tile {
+  border-radius: var(--border-radius);
+  padding: var(--tile-padding);
+  background: var(--secondary-background-color);
+
+  .title {
+    font-size: 16px;
+    color: var(--primary-text-color);
+  }
+
+  .subTitle {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+  }
+}

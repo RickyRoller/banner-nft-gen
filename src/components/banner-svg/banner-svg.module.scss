@@ -1,0 +1,6 @@
+@import 'styles/boxes.scss';
+
+.SVG {
+  width: 100%;
+  @extend .secondaryBoxShadow;
+}

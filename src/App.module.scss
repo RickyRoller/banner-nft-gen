@@ -1,0 +1,24 @@
+.App {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+
+  background: var(--primary-background-color);
+
+  .body {
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > * {
+      width: 85vw;
+    }
+  }
+
+  .footer {
+    background-color: var(--secondary-background-color);
+    padding: var(--tile-padding);
+    color: var(--secondary-text-color);
+  }
+}

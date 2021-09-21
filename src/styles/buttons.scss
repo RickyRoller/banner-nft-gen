@@ -1,0 +1,29 @@
+.button {
+  padding: var(--tile-padding);
+  text-transform: uppercase;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+}
+
+.primaryButton {
+  @extend .button;
+
+  border: 1px solid var(--primary-color);
+  background-color: var(--secondary-background-color);
+  color: var(--primary-color);
+
+  transition: background-color, color var(--transition-duration);
+
+  &:hover {
+    background-color: var(--secondary-background-accent-step-1);
+    color: var(--primary-text-color);
+  }
+}
+
+.secondaryButton {
+  @extend .button;
+
+  color: var(--primary-text-color);
+  background-color: var(--secondary-box-shadow);
+}

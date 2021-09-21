@@ -1,0 +1,21 @@
+@import 'styles/boxes.scss';
+@import 'styles/buttons.scss';
+
+.BannerGen {
+  .bannerGenerator {
+    margin: 24px 3px;
+  }
+
+  .noTemplate {
+    @extend .secondaryBoxShadow;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 0;
+
+    button {
+      @extend .primaryButton;
+    }
+  }
+}
