@@ -15,9 +15,13 @@
 
   transition: background-color, color var(--transition-duration);
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: var(--secondary-background-accent-step-1);
     color: var(--primary-text-color);
+  }
+
+  &:disabled {
+    opacity: 0.6;
   }
 }
 

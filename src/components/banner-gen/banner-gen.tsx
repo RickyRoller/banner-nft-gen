@@ -4,17 +4,25 @@ import { Tile } from 'components/tile';
 import tileStyles from 'components/tile/tile.module.scss';
 import { BannerSVG } from 'components/banner-svg';
 import { Controls } from 'components/controls';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectTemplateId } from 'state/app/selectors';
 import { TemplateSelector } from 'components/template-selector';
 import { modalContext } from 'hooks/modalContext';
+import { TemplateKeys } from 'banner-templates';
+import { setTemplateId } from 'state/app/actions';
 
 export const BannerGen: FC = () => {
+  const dispatch = useDispatch();
   const templateId = useSelector(selectTemplateId);
   const { handleModal } = useContext(modalContext);
 
+  const onTemplateSelect = (t: TemplateKeys) => {
+    handleModal(null, { open: false });
+    dispatch(setTemplateId(t));
+  };
+
   const openTemplateModal = () => {
-    handleModal(<div>Template Modal Here</div>, {
+    handleModal(<TemplateSelector onSelect={onTemplateSelect} />, {
       open: true,
       title: 'Choose a template',
     });

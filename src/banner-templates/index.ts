@@ -1,8 +1,12 @@
-import PFPLeft from './PFP-Left';
+import { Template } from 'models/templates';
+import { PFPLeft } from './PFP-Left';
 
-export const templates = {
+interface TempMap {
+  PFPLeft: typeof PFPLeft;
+}
+
+export const TemplatesMap: TempMap = {
   PFPLeft,
-  'PFP-Right': {},
 };
 
-export type TemplateKeys = keyof typeof templates;
+export type TemplateKeys = keyof typeof TemplatesMap;
