@@ -17,6 +17,13 @@ export const initPFPSelector = (id: string): BaseTemplateObject => ({
       default: '',
     },
     {
+      type: ControlTypes.Toggle,
+      title: 'Display',
+      objectId: id,
+      property: 'display',
+      default: false,
+    },
+    {
       type: ControlTypes.NumberSlider,
       title: 'Height',
       objectId: id,
@@ -62,6 +69,7 @@ export type PFPControlState = {
   positionY: number;
   height: number;
   width: number;
+  display: boolean;
 };
 
 export const renderPFP = ({
@@ -71,8 +79,9 @@ export const renderPFP = ({
   width,
   positionX,
   positionY,
+  display,
 }: PFPControlState) => {
-  return (
+  return display ? (
     <image
       key={id}
       href={url}
@@ -81,5 +90,5 @@ export const renderPFP = ({
       x={positionX}
       y={positionY}
     />
-  );
+  ) : null;
 };

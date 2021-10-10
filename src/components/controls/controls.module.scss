@@ -1,7 +1,11 @@
 .Controls {
-  .title {
-    font-size: 16px;
-    color: var(--primary-text-color);
-    margin-bottom: 24px;
+  .controlGroup {
+    margin-bottom: 12px;
+
+    .title {
+      font-size: 16px;
+      color: var(--primary-text-color);
+      margin-bottom: 8px;
+    }
   }
 }

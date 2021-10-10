@@ -9,13 +9,14 @@ import {
   TemplateObjectNFT,
   TemplateObjectTypes,
 } from 'models/templates';
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectControlsState, selectTemplate } from 'state/app/selectors';
 import { renderLinePattern } from 'template-components/line-pattern';
 import { objectControlId } from 'utils/helpers';
 import styles from './banner-svg.module.scss';
 import { renderPFP } from '../../template-components/pfp';
+import { renderGen1 } from '../../template-components/gen-1';
 
 interface Props {}
 
@@ -23,6 +24,17 @@ export const BannerSVG: FC<Props> = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const template = useSelector(selectTemplate);
   const controlsState = useSelector(selectControlsState);
+
+  useEffect(() => {
+    const genObject = template?.objects.find(
+      (o) => o.type === TemplateObjectTypes.GEN_1,
+    );
+    if (genObject !== undefined && svgRef.current !== null) {
+      const controlId = objectControlId(genObject.id);
+      const seed = controlsState[controlId('regenId')];
+      renderGen1(svgRef.current, seed);
+    }
+  }, [template, controlsState]);
 
   const templateToSvg = (template: Template) => {
     return template.objects.map((obj, i) => {
@@ -36,6 +48,7 @@ export const BannerSVG: FC<Props> = () => {
             positionY: controlsState[controlId('positionY')],
             height: controlsState[controlId('height')],
             width: controlsState[controlId('width')],
+            display: controlsState[controlId('display')],
           });
         case TemplateObjectTypes.LINE_PATTERN:
           return renderLinePattern({
@@ -49,6 +62,8 @@ export const BannerSVG: FC<Props> = () => {
             linePoints: controlsState[controlId('linePoints')],
             noise: controlsState[controlId('noise')],
           });
+        case TemplateObjectTypes.GEN_1:
+          return <g className="gen1" />;
       }
     });
   };
@@ -60,7 +75,10 @@ export const BannerSVG: FC<Props> = () => {
       ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {template !== undefined ? templateToSvg(template) : null}
+      <rect x="0" y="0" width={bannerWidth} height={bannerHeight} fill="#fff" />
+      <g className="objects">
+        {template !== undefined ? templateToSvg(template) : null}
+      </g>
     </svg>
   );
 };

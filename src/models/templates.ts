@@ -5,6 +5,7 @@ export enum TemplateObjectTypes {
   PFP,
   NFT,
   LINE_PATTERN,
+  GEN_1,
 }
 
 export enum CutoutType {

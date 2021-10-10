@@ -10,6 +10,8 @@ export interface ControlBase {
 export enum ControlTypes {
   NumberSlider,
   PFPSelector,
+  RandGen,
+  Toggle,
 }
 
 export interface NumberSlider extends ControlBase {

@@ -32,7 +32,7 @@ export const PfpSelectorModal: FC<Props> = ({ onSelect, onCancel }) => {
 
   const loadNFTsByPage = async () => {
     setLoadingNFTs(true);
-    const data = await fetchPagedNFTs(userAddress, page);
+    const data = await fetchPagedNFTs('', page);
     setNFTs(data);
     setLoadingNFTs(false);
   };

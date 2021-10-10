@@ -14,6 +14,8 @@ import { selectTemplate } from 'state/app/selectors';
 import { objectControlId } from 'utils/helpers';
 import styles from './controls.module.scss';
 import { PfpSelector } from '../control/pfp-selector';
+import { RandGen } from '../control/rand-gen';
+import { Toggle } from '../control/toggle';
 
 interface Props {}
 
@@ -46,6 +48,12 @@ export const Controls: FC<Props> = ({}) => {
         case ControlTypes.PFPSelector:
           c = control as ControlBase;
           return renderPFPSelector(controlId, c);
+        case ControlTypes.RandGen:
+          c = control as ControlBase;
+          return renderRandGen(controlId, c);
+        case ControlTypes.Toggle:
+          c = control as ControlBase;
+          return renderToggle(controlId, c);
       }
     });
 
@@ -61,12 +69,22 @@ export const Controls: FC<Props> = ({}) => {
     </Control>
   );
 
+  const renderRandGen = (id: string, control: ControlBase) => (
+    <Control key={id} title={control.title}>
+      <RandGen onSelect={updateValue(id)} />
+    </Control>
+  );
+
+  const renderToggle = (id: string, control: ControlBase) => (
+    <Control key={id} title={control.title}>
+      <Toggle control={control} onSelect={updateValue(id)} />
+    </Control>
+  );
+
   return (
     <div className={styles.Controls}>
       {template !== undefined ? (
         <>
-          <div className={styles.title}>Control the look of your banner</div>
-
           <div className={styles.containers}>
             {renderControlGroups(template)}
           </div>
