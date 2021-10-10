@@ -7,16 +7,10 @@ import {
 import { spline } from '../utils/spline';
 import { randomUniform } from 'd3-random';
 
-export const initLinePattern = (
-  id: string,
-): {
-  object: BaseTemplateObject;
-  controls: TemplateControls;
-} => ({
-  object: {
-    type: TemplateObjectTypes.LINE_PATTERN,
-    id,
-  },
+export const initLinePattern = (id: string): BaseTemplateObject => ({
+  type: TemplateObjectTypes.LINE_PATTERN,
+  id,
+  title: 'Line Pattern Controls',
   controls: [
     // {
     //   type: ControlTypes.NumberSlider,
@@ -65,6 +59,10 @@ export const initLinePattern = (
 });
 
 export interface LinePatternControlState {
+  patternId: string;
+  width: number;
+  height: number;
+  padding: number;
   angle: number;
   spread: number;
   strokeWidth: number;
@@ -72,58 +70,53 @@ export interface LinePatternControlState {
   noise: number;
 }
 
-export const renderLinePattern =
-  ({
-    width,
-    height,
-    padding,
-  }: {
-    width: number;
-    height: number;
-    padding: number;
-  }) =>
-  ({
-    angle,
-    spread,
-    strokeWidth,
-    linePoints,
-    noise,
-  }: LinePatternControlState) => {
-    // const rotations = Math.floor(angle / 90);
-    // let scalePercent = angle / 90;
-    // scalePercent = scalePercent > 1 ? scalePercent - rotations : scalePercent;
-    // console.log(rotations, scalePercent);
-    const colWidth = spread + strokeWidth;
-    const rowHeight = Math.ceil(height / (linePoints - 1));
-    const paths = [];
+export const renderLinePattern = ({
+  patternId,
+  width,
+  height,
+  padding,
+  angle,
+  spread,
+  strokeWidth,
+  linePoints,
+  noise,
+}: LinePatternControlState) => {
+  // const rotations = Math.floor(angle / 90);
+  // let scalePercent = angle / 90;
+  // scalePercent = scalePercent > 1 ? scalePercent - rotations : scalePercent;
+  // console.log(rotations, scalePercent);
+  const colWidth = spread + strokeWidth;
+  const rowHeight = Math.ceil(height / (linePoints - 1));
+  const paths = [];
 
-    const points = new Array(linePoints).fill(undefined);
-    const randomNoise = randomUniform(-noise, noise);
-    const splinePoints = points.map((a, i) => {
-      const randX = randomNoise();
-      return { x: randX, y: i * rowHeight };
-    });
-    const baseSpline = spline(splinePoints, 1, false);
+  const points = new Array(linePoints).fill(undefined);
+  const randomNoise = randomUniform(-noise, noise);
+  const splinePoints = points.map((a, i) => {
+    const randX = randomNoise();
+    return { x: randX, y: i * rowHeight };
+  });
+  const baseSpline = spline(splinePoints, 1, false);
 
-    for (let x = -padding; x <= width + padding; x += colWidth) {
-      paths.push(
-        <path
-          key={x}
-          d={baseSpline}
-          stroke="steelblue"
-          strokeWidth={strokeWidth}
-          fill="none"
-          transform={`translate(${x}, 0)`}
-        />,
-      );
-    }
-
-    return (
-      <g
-        transform-origin={`${width / 2} ${height / 2}`}
-        // transform={`rotate(${angle}) scale(${1 + 5 * scalePercent})`}
-      >
-        {paths}
-      </g>
+  for (let x = -padding; x <= width + padding; x += colWidth) {
+    paths.push(
+      <path
+        key={x}
+        d={baseSpline}
+        stroke="steelblue"
+        strokeWidth={strokeWidth}
+        fill="none"
+        transform={`translate(${x}, 0)`}
+      />,
     );
-  };
+  }
+
+  return (
+    <g
+      key={patternId}
+      transform-origin={`${width / 2} ${height / 2}`}
+      // transform={`rotate(${angle}) scale(${1 + 5 * scalePercent})`}
+    >
+      {paths}
+    </g>
+  );
+};
