@@ -1,17 +1,22 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { TemplateKeys } from 'banner-templates';
-import { TemplateControls } from 'models/controls';
-import { AppThunk } from '../store';
+import { TemplateObjects } from 'models/templates';
+import { connectWallet } from '../../components/services/wallet';
 
 export const setTemplateId = createAction<TemplateKeys>('app/setTemplateId');
 
 export const deployControls =
-  createAction<TemplateControls>('app/deployControls');
+  createAction<TemplateObjects[]>('app/deployControls');
 
 export const updateControlValue = createAction<{
   property: string;
   value: any;
 }>('app/updateControlValue');
+
+export const connectUserWallet = createAsyncThunk(
+  'app/setUserAddress',
+  connectWallet,
+);
 
 // export const incrementAsyncThunk = createAsyncThunk(
 //   'INCREMENT_THUNK',

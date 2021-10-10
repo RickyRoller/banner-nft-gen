@@ -9,45 +9,45 @@ import {
   TemplateObjectNFT,
   TemplateObjectTypes,
 } from 'models/templates';
-import { FC, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deployControls } from 'state/app/actions';
+import { FC, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { selectControlsState, selectTemplate } from 'state/app/selectors';
 import { renderLinePattern } from 'template-components/line-pattern';
+import { objectControlId } from 'utils/helpers';
 import styles from './banner-svg.module.scss';
+import { renderPFP } from '../../template-components/pfp';
 
 interface Props {}
 
 export const BannerSVG: FC<Props> = () => {
-  const dispatch = useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const template = useSelector(selectTemplate);
   const controlsState = useSelector(selectControlsState);
 
-  useEffect(() => {
-    if (template !== undefined) {
-      dispatch(deployControls(template.controls));
-    }
-  }, [template]);
-
   const templateToSvg = (template: Template) => {
     return template.objects.map((obj, i) => {
-      let o;
+      const controlId = objectControlId(obj.id);
       switch (obj.type) {
-        case TemplateObjectTypes.NFT:
-          o = obj as TemplateObjectNFT;
-          return <circle key={i} cx={o.x} cy={o.y} r={o.width / 2} />;
+        case TemplateObjectTypes.PFP:
+          return renderPFP({
+            id: obj.id,
+            url: controlsState[controlId('url')],
+            positionX: controlsState[controlId('positionX')],
+            positionY: controlsState[controlId('positionY')],
+            height: controlsState[controlId('height')],
+            width: controlsState[controlId('width')],
+          });
         case TemplateObjectTypes.LINE_PATTERN:
           return renderLinePattern({
+            patternId: obj.id,
             width: bannerWidth,
             height: bannerHeight,
             padding: bannerPadding,
-          })({
-            angle: controlsState.angle,
-            spread: controlsState.spread,
-            strokeWidth: controlsState.strokeWidth,
-            linePoints: controlsState.linePoints,
-            noise: controlsState.noise,
+            angle: controlsState[controlId('angle')],
+            spread: controlsState[controlId('spread')],
+            strokeWidth: controlsState[controlId('strokeWidth')],
+            linePoints: controlsState[controlId('linePoints')],
+            noise: controlsState[controlId('noise')],
           });
       }
     });
@@ -58,6 +58,7 @@ export const BannerSVG: FC<Props> = () => {
       className={styles.SVG}
       viewBox={`0 0 ${bannerWidth} ${bannerHeight}`}
       ref={svgRef}
+      xmlns="http://www.w3.org/2000/svg"
     >
       {template !== undefined ? templateToSvg(template) : null}
     </svg>

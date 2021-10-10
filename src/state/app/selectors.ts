@@ -12,3 +12,6 @@ export const selectTemplate = createSelector(
 export const selectControls = (state: RootState) => state.app.controls;
 export const selectControlsState = (state: RootState) =>
   state.app.controlsState;
+
+export const selectUserAddress = (state: RootState) => state.app.userAddress;
+export const selectWalletStatus = (state: RootState) => state.app.walletStatus;

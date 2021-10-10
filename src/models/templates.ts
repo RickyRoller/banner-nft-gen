@@ -2,6 +2,7 @@ import { TemplateKeys } from 'banner-templates';
 import { TemplateControls } from './controls';
 
 export enum TemplateObjectTypes {
+  PFP,
   NFT,
   LINE_PATTERN,
 }
@@ -13,12 +14,13 @@ export enum CutoutType {
 export interface Template {
   key: TemplateKeys;
   objects: TemplateObjects[];
-  controls: TemplateControls;
 }
 
 export interface BaseTemplateObject {
   type: TemplateObjectTypes;
   id: string;
+  title: string;
+  controls: TemplateControls;
 }
 
 export interface TemplateObjectNFT extends BaseTemplateObject {

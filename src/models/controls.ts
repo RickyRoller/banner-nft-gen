@@ -1,5 +1,5 @@
-interface ControlBase {
-  type: ControlTypes.NumberSlider;
+export interface ControlBase {
+  type: ControlTypes;
   title: string;
   label?: string;
   objectId: string;
@@ -9,6 +9,7 @@ interface ControlBase {
 
 export enum ControlTypes {
   NumberSlider,
+  PFPSelector,
 }
 
 export interface NumberSlider extends ControlBase {
@@ -16,4 +17,4 @@ export interface NumberSlider extends ControlBase {
   max: number;
 }
 
-export type TemplateControls = NumberSlider[];
+export type TemplateControls = (NumberSlider | ControlBase)[];

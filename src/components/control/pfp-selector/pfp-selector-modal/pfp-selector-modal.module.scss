@@ -1,0 +1,93 @@
+@import 'styles/buttons.scss';
+
+.centered {
+  display: grid;
+  place-content: center;
+}
+
+.noNFTs {
+  @extend .centered;
+  font-size: 24px;
+  color: var(--primary-text-color);
+}
+
+.loadingNFTs {
+  @extend .centered;
+  font-size: 48px;
+  color: var(--primary-accent-color);
+}
+
+.PFPSelectorModal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .pfps {
+    flex-grow: 2;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+    padding-right: 12px;
+    margin-top: 24px;
+
+    .nft {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      margin-left: 12px;
+      border-radius: var(--border-radius);
+      background: var(--secondary-background-accent-step-1);
+      box-sizing: border-box;
+      border: 1px solid transparent;
+
+      &.selected {
+        box-shadow: 0 0 2px 1px var(--primary-accent-color);
+        border: 1px solid var(--primary-accent-color);
+      }
+
+      &:hover {
+        border: 1px solid var(--primary-accent-color);
+        cursor: pointer;
+      }
+
+      img {
+        width:100%;
+      }
+
+      .nftLabel {
+        color: var(--primary-text-color);
+        font-size: 14px;
+        margin-top: 8px;
+        text-align: center;
+        max-width: 100%;
+        overflow: hidden;
+        text-wrap: none;
+
+        .name {
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px;
+    background-color: var(--secondary-background-color);
+    border-top: 1px solid var(--primary-accent-color);
+
+    .cancel {
+      @extend .secondaryButton;
+      margin-right: 12px;
+    }
+
+    .select {
+      @extend .primaryButton;
+    }
+  }
+}
