@@ -10,3 +10,6 @@ creates the image that they like, the image can be stored on IPFS and minted as 
 - OpenSea API for fetching user NFTs
 
 https://RickyRoller.github.io/banner-nft-gen
+
+Demo:
+https://vimeo.com/628473785/29510f77e8
